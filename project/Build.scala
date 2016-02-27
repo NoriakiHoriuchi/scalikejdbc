@@ -251,8 +251,8 @@ object ScalikeJDBCProjects extends Build {
         Seq(
           "org.slf4j"      %  "slf4j-api"       % _slf4jApiVersion  % "compile",
           "ch.qos.logback" %  "logback-classic" % _logbackVersion   % "test",
-          "org.scalatest"  % "scalatest_2.11"       % scalatestVersion.value % "provided",
-          "org.specs2"     % "specs2-core_2.11"     % specs2Version.value % "provided"
+          "org.scalatest"  %% "scalatest"       % scalatestVersion.value % "provided",
+          "org.specs2"     %% "specs2-core"     % specs2Version.value % "provided"
         ) ++ jdbcDriverDependenciesInTestScope
       }
     )
@@ -311,10 +311,10 @@ object ScalikeJDBCProjects extends Build {
     "sonatype snaphots" at "https://oss.sonatype.org/content/repositories/snapshots"
   )
   def scalaTestDependenciesInTestScope(v: String) =
-    Seq("org.scalatest" % "scalatest_2.11" % v % "test")
+    Seq("org.scalatest" %% "scalatest" % v % "test")
 
   def specs2DependenciesInTestScope(v: String) =
-    Seq("org.specs2" % "specs2-core_2.11" % v % "test")
+    Seq("org.specs2" %% "specs2-core" % v % "test")
 
   val jdbcDriverDependenciesInTestScope = Seq(
     "com.h2database"    % "h2"                   % _h2Version         % "test",

@@ -195,7 +195,7 @@ class QueryInterfaceSpec extends FlatSpec with Matchers with DBSettings with SQL
         findByOptionalAccountName(Option.empty).size should be(11)
 
         {
-          val (productId, accountId) = (Some(1), None)
+          val (productId, accountId): (Option[Int], Option[Int]) = (Some(1), None)
           val ids = withSQL {
             select(o.result.id).from(Order as o)
               .where(sqls.toAndConditionOpt(
@@ -220,7 +220,7 @@ class QueryInterfaceSpec extends FlatSpec with Matchers with DBSettings with SQL
         }
 
         {
-          val (id1, id2) = (Some(1), None)
+          val (id1, id2): (Option[Int], Option[Int]) = (Some(1), None)
           val ids = withSQL {
             select(o.result.id).from(Order as o)
               .where
