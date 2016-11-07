@@ -371,6 +371,18 @@ class ParameterBinderFactorySpec extends FlatSpec with MockitoSugar {
     verify(stmt).setObject(3, null)
   }
 
+  it should "have instance for Either[A, B]" in {
+    val stmt = mock[PreparedStatement]
+    type A = String
+    type B = Int
+    implicitly[ParameterBinderFactory[Either[A, B]]].apply(Left("foo"))(stmt, 1)
+    implicitly[ParameterBinderFactory[Either[A, B]]].apply(Right(1))(stmt, 2)
+    implicitly[ParameterBinderFactory[Either[A, B]]].apply(null)(stmt, 3)
+    verify(stmt).setString(1, "foo")
+    verify(stmt).setInt(2, 1)
+    verify(stmt).setObject(3, null)
+  }
+
   it should "have instance for EnumLike" in {
     val stmt = mock[PreparedStatement]
     implicitly[ParameterBinderFactory[EnumLike]].apply(EnumLike.Foo)(stmt, 1)

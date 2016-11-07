@@ -123,6 +123,17 @@ trait LowPriorityImplicitsParameterBinderFactory1 extends LowPriorityImplicitsPa
     }
   }
 
+  implicit def eitherParameterBinderFactory[A, B](implicit evA: ParameterBinderFactory[A], evB: ParameterBinderFactory[B]): ParameterBinderFactory[Either[A, B]] =
+    new ParameterBinderFactory[Either[A, B]] {
+      def apply(value: Either[A, B]): ParameterBinderWithValue = value match {
+        case null => ParameterBinder.NullParameterBinder
+        case Left(v) if evA == asisParameterBinderFactory => AsIsParameterBinder(v)
+        case Left(v) => ContramappedParameterBinder(v, evA(v))
+        case Right(v) if evB == asisParameterBinderFactory => AsIsParameterBinder(v)
+        case Right(v) => ContramappedParameterBinder(v, evB(v))
+      }
+    }
+
   /**
    * Unsafe ParameterBinderFactory which accepts any type value as-is.
    *
